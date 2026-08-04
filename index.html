@@ -11,8 +11,13 @@
     <script nomodule src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer-legacy.js"></script>
 
     <style>
-      body { margin: 0; padding: 0; background-color: #ffffff; font-family: sans-serif; }
-      model-viewer { width: 100vw; height: 100vh; background-color: #ffffff; display: block; }
+      body { margin: 0; padding: 0; font-family: sans-serif; }
+
+      model-viewer {
+        width: 100vw; height: 100vh; display: block;
+        /* Soft studio-style gradient instead of flat white */
+        background: radial-gradient(circle at 50% 40%, #fdfdfd 0%, #e8e8e8 60%, #d6d6d6 100%);
+      }
 
       #splash-container {
         position: absolute; width: 100vw; height: 100vh; top: 0; left: 0;
@@ -22,6 +27,25 @@
       }
       #splash-container img { width: 200px; height: auto; margin-bottom: 20px; }
       #splash-container h1 { font-size: 22px; color: #111111; font-weight: bold; }
+
+      /* Prominent AR call-to-action button */
+      #ar-button {
+        position: absolute;
+        bottom: 30px; left: 50%;
+        transform: translateX(-50%);
+        background-color: #111111;
+        color: #ffffff;
+        border: none;
+        border-radius: 30px;
+        padding: 14px 28px;
+        font-size: 16px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+        z-index: 10;
+      }
     </style>
   </head>
   <body>
@@ -43,7 +67,13 @@
       touch-action="none"
       auto-rotate
       shadow-intensity="1"
+      environment-image="neutral"
       poster="MUHAMMAD-ds-logo.png">
+
+      <!-- Prominent tap-to-view-on-table button -->
+      <button id="ar-button" slot="ar-button">
+        📱 View on Your Table
+      </button>
     </model-viewer>
 
     <script>
