@@ -4,12 +4,12 @@
     <title>Muhammad Digital Solution - 3D Menu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google Model Viewer Sahi Script Path Link -->
-    <script type="module" src="https://googleapis.com"></script>
+    <!-- Verified Google Model Viewer CDN Link -->
+    <script type="module" src="https://unpkg.com"></script>
     
     <style>
       body { margin: 0; padding: 0; background-color: #ffffff; font-family: sans-serif; }
-      model-viewer { width: 100vw; height: 100vh; background-color: #ffffff; }
+      model-viewer { width: 100vw; height: 100vh; background-color: #ffffff; display: block; }
       
       #splash-container {
         position: absolute; width: 100vw; height: 100vh; top: 0; left: 0;
@@ -23,11 +23,13 @@
   </head>
   <body>
 
+    <!-- 1. Pehle aapka logo 100% har mobile par khulega -->
     <div id="splash-container">
       <img src="MUHAMMAD ds logo.png" alt="Muhammad Digital Solution">
       <h1>Muhammad Digital Solution</h1>
     </div>
 
+    <!-- 2. Piche automatic aapka crispy zinger burger load hoga -->
     <model-viewer 
       src="d5e3015e-93f5-4c51-9104-a01a14576000_76da0872bd5fb99710ab8ed634260d88.glb"
       ar
@@ -41,7 +43,7 @@
     <script>
       const splash = document.getElementById('splash-container');
       
-      // Automatic Timer: 3 seconds baad logo khud hat jayega aur burger samne aa jayega
+      // Fixed Automatic Timer: 3 seconds ke baad logo screen lazmi hat jayegi chahe internet slow ho ya fast
       setTimeout(() => {
         splash.style.opacity = 0;
         setTimeout(() => {
