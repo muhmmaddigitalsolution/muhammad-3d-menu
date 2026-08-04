@@ -4,13 +4,16 @@
     <title>Muhammad Digital Solution - 3D Menu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Verified Google Model Viewer CDN Link -->
-    <script type="module" src="https://unpkg.com"></script>
-    
+
+    <!-- This is the correct, official Google Model Viewer CDN script -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+    <!-- Fallback for older browsers that don't support ES modules -->
+    <script nomodule src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer-legacy.js"></script>
+
     <style>
       body { margin: 0; padding: 0; background-color: #ffffff; font-family: sans-serif; }
       model-viewer { width: 100vw; height: 100vh; background-color: #ffffff; display: block; }
-      
+
       #splash-container {
         position: absolute; width: 100vw; height: 100vh; top: 0; left: 0;
         background-color: #ffffff; display: flex; flex-direction: column;
@@ -22,34 +25,50 @@
     </style>
   </head>
   <body>
-
-    <!-- 1. Pehle aapka logo 100% har mobile par khulega -->
+    <!-- Splash Screen Layout -->
     <div id="splash-container">
-      <img src="MUHAMMAD ds logo.png" alt="Muhammad Digital Solution">
+      <img src="MUHAMMAD-ds-logo.png" alt="Muhammad Digital Solution">
       <h1>Muhammad Digital Solution</h1>
     </div>
 
-    <!-- 2. Piche automatic aapka crispy zinger burger load hoga -->
-    <model-viewer 
+    <!-- 3D Model Viewer Layout -->
+    <model-viewer
+      id="menu-model"
       src="d5e3015e-93f5-4c51-9104-a01a14576000_76da0872bd5fb99710ab8ed634260d88.glb"
+      alt="3D Burger Model"
       ar
       ar-modes="quick-look webxr scene-viewer"
       ar-scale="auto"
       camera-controls
       touch-action="none"
-      auto-rotate>
+      auto-rotate
+      shadow-intensity="1"
+      poster="MUHAMMAD-ds-logo.png">
     </model-viewer>
 
     <script>
       const splash = document.getElementById('splash-container');
-      
-      // Fixed Automatic Timer: 3 seconds ke baad logo screen lazmi hat jayegi chahe internet slow ho ya fast
-      setTimeout(() => {
+      const modelViewer = document.getElementById('menu-model');
+      let removed = false;
+
+      function removeSplash() {
+        if (removed) return;
+        removed = true;
         splash.style.opacity = 0;
-        setTimeout(() => {
-          splash.remove();
-        }, 500);
-      }, 3000); 
+        setTimeout(() => splash.remove(), 500);
+      }
+
+      // Remove splash as soon as the model actually loads...
+      modelViewer.addEventListener('load', removeSplash);
+
+      // ...or the model itself failed to load, so we don't get stuck forever
+      modelViewer.addEventListener('error', (e) => {
+        console.error('model-viewer failed to load the GLB:', e.detail);
+        removeSplash();
+      });
+
+      // ...or as a hard fallback after 4s no matter what
+      setTimeout(removeSplash, 4000);
     </script>
   </body>
 </html>
