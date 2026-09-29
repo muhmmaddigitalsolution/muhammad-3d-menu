@@ -1,76 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Muhammad Digital Solution - 3D Menu</title>
+    <title>Déjà Deli - Interactive 3D Menu by MDS</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- This is the correct, official Google Model Viewer CDN script -->
+    <!-- Official Google Model Viewer Scripts -->
     <script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
-    <!-- Fallback for older browsers that don't support ES modules -->
     <script nomodule src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer-legacy.js"></script>
 
     <style>
-      body { margin: 0; padding: 0; font-family: sans-serif; }
+      body { margin: 0; padding: 0; font-family: sans-serif; background: #ffffff; overflow: hidden; }
 
       model-viewer {
         width: 100vw; height: 100vh; display: block;
-        /* Soft studio-style gradient instead of flat white */
         background: radial-gradient(circle at 50% 40%, #fdfdfd 0%, #e8e8e8 60%, #d6d6d6 100%);
       }
 
       #splash-container {
         position: absolute; width: 100vw; height: 100vh; top: 0; left: 0;
-        background-color: #ffffff; display: flex; flex-direction: column;
+        background-color: #F2EAD3; display: flex; flex-direction: column;
         justify-content: center; align-items: center; z-index: 999;
         transition: opacity 0.5s ease;
       }
-      #splash-container img { width: 200px; height: auto; margin-bottom: 20px; }
-      #splash-container h1 { font-size: 22px; color: #111111; font-weight: bold; }
+      
+      #client-logo { width: 220px; height: auto; margin-bottom: 5px; }
+      
+      #agency-credit { 
+        position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+        font-size: 13px; color: #73534C; font-weight: bold; 
+        letter-spacing: 0.5px; background: rgba(255, 255, 255, 0.6); 
+        padding: 6px 18px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      }
+      #agency-credit span { color: #d9383a; }
 
-      /* Prominent AR call-to-action button */
+      #loading-text { font-size: 12px; color: #73534C; margin-top: 8px; font-style: italic; opacity: 0.8; }
+
       #ar-button {
-        position: absolute;
-        bottom: 30px; left: 50%;
-        transform: translateX(-50%);
-        background-color: #111111;
-        color: #ffffff;
-        border: none;
-        border-radius: 30px;
-        padding: 14px 28px;
-        font-size: 16px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-        z-index: 10;
+        position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+        background-color: #73534C; color: #ffffff; border: none; border-radius: 30px;
+        padding: 14px 28px; font-size: 16px; font-weight: bold; display: flex;
+        align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.2); z-index: 10;
       }
     </style>
   </head>
   <body>
-    <!-- Splash Screen Layout -->
+    
     <div id="splash-container">
-      <img src="MUHAMMAD%20ds%20logo.png" alt="Muhammad Digital Solution">
-      <h1>Muhammad Digital Solution</h1>
+      <img id="client-logo" src="logo.jpg" alt="Déjà Deli Logo" onerror="this.style.display='none'">
+      <div id="agency-credit">Created by <span>Muhammad Digital Solution</span></div>
+      <div id="loading-text">Calibrating Immersive 3D View...</div>
     </div>
 
-    <!-- 3D Model Viewer Layout -->
     <model-viewer
       id="menu-model"
-      src="d5e3015e-93f5-4c51-9104-a01a14576000_76da0872bd5fb99710ab8ed634260d88.glb"
-      alt="3D Burger Model"
+      src="Toast.glb"
+      loading="eager"
+      alt="3D Premium Dessert Model"
       ar
       ar-modes="quick-look webxr scene-viewer"
       ar-scale="auto"
       camera-controls
       touch-action="none"
       auto-rotate
-      shadow-intensity="1"
+      shadow-intensity="1.5"
       environment-image="neutral"
-      poster="MUHAMMAD%20ds%20logo.png">
+      camera-target="0m 0m 0m"
+      camera-orbit="auto auto auto"
+      interaction-prompt="none">
 
-      <!-- Prominent tap-to-view-on-table button -->
       <button id="ar-button" slot="ar-button">
         📱 View on Your Table
       </button>
@@ -88,16 +86,11 @@
         setTimeout(() => splash.remove(), 500);
       }
 
-      // Remove splash as soon as the model actually loads...
       modelViewer.addEventListener('load', removeSplash);
-
-      // ...or the model itself failed to load, so we don't get stuck forever
       modelViewer.addEventListener('error', (e) => {
         console.error('model-viewer failed to load the GLB:', e.detail);
         removeSplash();
       });
-
-      // ...or as a hard fallback after 4s no matter what
       setTimeout(removeSplash, 4000);
     </script>
   </body>
